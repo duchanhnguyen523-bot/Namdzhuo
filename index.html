@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Namdz học bài - Ôn Tập Từ Vựng Nâng Cao</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #10b981;
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top left, #1e1b4b, #0f172a, #020617);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a5b4fc, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        p.subtitle {
+            color: var(--text-sub);
+            font-size: 14px;
+        }
+
+        .mode-selector {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mode-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-sub);
+            padding: 12px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .word-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .word-pos {
+            font-size: 12px;
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 18px;
+            color: white;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 14px 20px;
+            border-radius: 14px;
+            border: none;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--accent), #059669);
+            color: white;
+            flex: 1;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-help {
+            background: rgba(236, 72, 153, 0.15);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            color: #f472b6;
+        }
+
+        .btn-help:hover {
+            background: rgba(236, 72, 153, 0.3);
+        }
+
+        .copy-code-btn {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed var(--border);
+            color: var(--text-sub);
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .copy-code-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+        }
+
+        .feedback.correct {
+            display: block;
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .feedback.wrong {
+            display: block;
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        /* Modal Key Trợ Giúp */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .modal-content {
+            background: #1e293b;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 12px;
+            font-size: 20px;
+            color: var(--secondary);
+        }
+
+        .modal-content p {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-bottom: 16px;
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Namdz học bài</h1>
+        <p class="subtitle">Hệ thống luyện tập từ vựng tiếng Anh thông minh</p>
+    </header>
+
+    <div class="mode-selector">
+        <button class="mode-btn active" onclick="setCategory('unit2')">Unit 2 Lớp 8</button>
+        <button class="mode-btn" onclick="setCategory('cap3')">Cấp 3 (THPT)</button>
+        <button class="mode-btn" onclick="setCategory('daihoc')">Đại Học (IELTS)</button>
+        <button class="mode-btn" onclick="setCategory('vohan')">Vô Hạn (Tất cả)</button>
+    </div>
+
+    <div class="stats-bar">
+        <span>Đúng: <strong id="score" style="color: var(--accent);">0</strong></span>
+        <span>Chuỗi: <strong id="streak" style="color: var(--secondary);">0 🔥</strong></span>
+        <span>Chế độ: <strong id="current-mode-label" style="color: #a5b4fc;">Unit 2</strong></span>
+    </div>
+
+    <div class="card">
+        <div class="word-title" id="vietnamese-word">Đang tải...</div>
+        <div class="word-pos" id="word-pos">Loại từ</div>
+    </div>
+
+    <div class="input-group">
+        <input type="text" id="user-input" placeholder="Nhập từ tiếng Anh tương ứng..." autocomplete="off">
+    </div>
+
+    <div class="action-btns">
+        <button class="btn btn-submit" onclick="checkAnswer()">Kiểm tra</button>
+        <button class="btn btn-help" onclick="openHelpModal()">🔑 Trợ giúp</button>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+
+    <button class="copy-code-btn" onclick="copySourceCode()">📋 Sao chép mã nguồn ứng dụng để chia sẻ</button>
+</div>
+
+<!-- Modal Trợ Giúp (Cần Key) -->
+<div class="modal" id="helpModal">
+    <div class="modal-content">
+        <h3>Yêu Cầu Key Trợ Giúp</h3>
+        <p>Nhập Key bí mật để lấy ngay đáp án đúng của từ này!</p>
+        <input type="text" id="key-input" placeholder="Nhập Key vào đây..." style="width: 100%; margin-bottom: 12px;">
+        <div class="modal-btns">
+            <button class="btn btn-submit" onclick="submitKey()">Xác nhận</button>
+            <button class="btn btn-help" style="background: rgba(255,255,255,0.1); color: white;" onclick="closeHelpModal()">Hủy</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Kho Từ Vựng
+    const vocabulary = {
+        unit2: [
+            { en: "tan", vi: "rám nắng", pos: "v/adj/n" },
+            { en: "enjoy", vi: "thích, tận hưởng", pos: "v" },
+            { en: "enjoyment", vi: "sự thích thú, niềm vui", pos: "n" },
+            { en: "village", vi: "ngôi làng", pos: "n" },
+            { en: "villager", vi: "dân làng", pos: "n" },
+            { en: "harvest", vi: "vụ thu hoạch", pos: "n/v" },
+            { en: "combine harvester", vi: "máy gặt đập liên hợp", pos: "n" },
+            { en: "friendly", vi: "thân thiện", pos: "adj" },
+            { en: "paddy field", vi: "cánh đồng lúa", pos: "n" },
+            { en: "scenery", vi: "phong cảnh", pos: "n" },
+            { en: "picturesque", vi: "đẹp như tranh", pos: "adj" },
+            { en: "desert", vi: "sa mạc", pos: "n" },
+            { en: "Africa", vi: "châu Phi", pos: "n" }
+        ],
+        cap3: [
+            { en: "abandon", vi: "rời bỏ, ruồng bỏ", pos: "v" },
+            { en: "accumulate", vi: "tích lũy, gom góp", pos: "v" },
+            { en: "adequate", vi: "đầy đủ, thỏa đáng", pos: "adj" },
+            { en: "advocate", vi: "ủng hộ, tán thành", pos: "v" },
+            { en: "comprehensive", vi: "toàn diện, bao quát", pos: "adj" }
+        ],
+        daihoc: [
+            { en: "ubiquitous", vi: "có mặt ở khắp nơi", pos: "adj" },
+            { en: "ephemeral", vi: "phù du, chóng khánh", pos: "adj" },
+            { en: "meticulous", vi: "tỉ mỉ, trau chuốt", pos: "adj" },
+            { en: "pragmatic", vi: "thực dụng, thực tế", pos: "adj" },
+            { en: "quintessential", vi: "tinh túy, mẫu mực", pos: "adj" }
+        ]
+    };
+
+    let currentCategory = 'unit2';
+    let currentWord = null;
+    let score = 0;
+    let streak = 0;
+
+    function setCategory(cat) {
+        currentCategory = cat;
+        document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+        
+        const labels = {
+            unit2: 'Unit 2',
+            cap3: 'Cấp 3 (THPT)',
+            daihoc: 'Đại Học',
+            vohan: 'Vô Hạn'
+        };
+        document.getElementById('current-mode-label').innerText = labels[cat];
+        nextWord();
+    }
+
+    function getRandomWord() {
+        let pool = [];
+        if (currentCategory === 'vohan') {
+            pool = [...vocabulary.unit2, ...vocabulary.cap3, ...vocabulary.daihoc];
+        } else {
+            pool = vocabulary[currentCategory];
+        }
+        return pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    function nextWord() {
+        currentWord = getRandomWord();
+        document.getElementById('vietnamese-word').innerText = currentWord.vi;
+        document.getElementById('word-pos').innerText = currentWord.pos;
+        document.getElementById('user-input').value = '';
+        document.getElementById('feedback').style.display = 'none';
+        document.getElementById('user-input').focus();
+    }
+
+    function checkAnswer() {
+        const input = document.getElementById('user-input').value.trim().toLowerCase();
+        const feedback = document.getElementById('feedback');
+
+        if (!input) return;
+
+        if (input === currentWord.en.toLowerCase()) {
+            score += 10;
+            streak++;
+            feedback.className = 'feedback correct';
+            feedback.innerText = '✨ Chính xác tuyệt vời! (+10 điểm)';
+            setTimeout(nextWord, 1200);
+        } else {
+            streak = 0;
+            feedback.className = 'feedback wrong';
+            feedback.innerText = `❌ Tiếc quá! Đáp án đúng là: "${currentWord.en}"`;
+        }
+
+        document.getElementById('score').innerText = score;
+        document.getElementById('streak').innerText = streak + ' 🔥';
+    }
+
+    // Modal Trợ Giúp
+    function openHelpModal() {
+        document.getElementById('helpModal').style.display = 'flex';
+        document.getElementById('key-input').value = '';
+        document.getElementById('key-input').focus();
+    }
+
+    function closeHelpModal() {
+        document.getElementById('helpModal').style.display = 'none';
+    }
+
+    function submitKey() {
+        const key = document.getElementById('key-input').value.trim().toLowerCase();
+        if (key === 'khoi') {
+            closeHelpModal();
+            const feedback = document.getElementById('feedback');
+            feedback.className = 'feedback correct';
+            feedback.innerText = `🔑 Key Hợp Lệ! Đáp án đúng là: "${currentWord.en}"`;
+        } else {
+            alert('❌ Key không chính xác! Vui lòng thử lại.');
+        }
+    }
+
+    function copySourceCode() {
+        const code = document.documentElement.outerHTML;
+        navigator.clipboard.writeText(code).then(() => {
+            alert('📋 Đã sao chép toàn bộ Source Code! Bạn có thể dán vào JSBin hoặc file HTML để chia sẻ.');
+        });
+    }
+
+    // Lắng nghe phím Enter
+    document.getElementById('user-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') checkAnswer();
+    });
+
+    // Khởi chạy
+    nextWord();
+</script>
+</body>
+</html>
